@@ -1,6 +1,7 @@
 {
   "mappings": [
     "/content/aem-eds-ue/:/",
-    "/content/aem-eds-ue/configuration:/.helix/config.json"
+    "/content/aem-eds-ue/configuration:/.helix/config.json",
+    "/content/aem-eds-ue/redirects:/redirects.json"
   ]
 }
