@@ -79,13 +79,16 @@ class PersonInfo extends HTMLElement {
 
     //encode URI params
     const encodedParam = encodeURIComponent(
-      `;${aemHeadlessService.queryParamName}=${queryParamValue}`
+      `;${aemHeadlessService.queryParamName}=${queryParamValue}`,null
     );
 
     try {
       // Make XHR call to AEM
       const response = await fetch(
-        `${headlessAPIURL}/${aemHeadlessService.persistedQueryName}${encodedParam}`
+        `${headlessAPIURL}/${aemHeadlessService.persistedQueryName}${encodedParam}`,{
+          mode: 'no-cors',
+          credentials: 'include'
+        }
       );
 
       if (!response.ok) {
