@@ -8,17 +8,11 @@ export default function decorate(block) {
 }
 // Defines the Headless Service object w/ properties
 const aemHeadlessService = {
-  aemHost: "https://publish-p110498-e1334763.adobeaemcloud.com",
-  graphqlAPIEndpoint: "graphql/execute.json",
-  projectName: "my-project",
-  persistedQueryName: "person-by-name",
-  queryParamName: "name",
-};
-
-//AEM credentials object if connecting to AEM-Author Service, not needed for publish service
-const aemCredentials = {
-  username: "admin",
-  password: "admin",
+  aemHost: 'https://publish-p110498-e1334763.adobeaemcloud.com',
+  graphqlAPIEndpoint: 'graphql/execute.json',
+  projectName: 'my-project',
+  persistedQueryName: 'person-by-name',
+  queryParamName: 'name',
 };
 
 //Person Info HTML block which will be added as HTML Template and appended to shadow DOM upon JSON Value replacements
@@ -45,7 +39,7 @@ class PersonInfo extends HTMLElement {
     super();
 
     // Create a shadow root
-    const shadowRoot = this.attachShadow({ mode: "open" });
+    const shadowRoot = this.attachShadow({ mode: 'open' });
 
     // init Shadow DOM specific CSS
     this.initStyles();
@@ -54,25 +48,29 @@ class PersonInfo extends HTMLElement {
   // lifecycle callback :: When custom element is appended to document
   connectedCallback() {
     // get attribute values from the 'person-info' custom element
-    const host = this.getAttribute("host");
-    const queryParamValue = this.getAttribute("query-param-value");
+    const host = this.getAttribute('host');
+    const queryParamValue = this.getAttribute('query-param-value');
 
     const headlessAPIURL = this.buildHeadlessAPIURL(host);
     console.log(`Using AEM Headless API URL:${headlessAPIURL}`);
 
-    this.fetchPersonByNamePersistedQuery(headlessAPIURL, queryParamValue).then(
-      ({ data, err }) => {
-        if (err) {
-          console.log("Error while fetching data");
-        } else if (data?.personList?.items.length === 1) {
-          this.renderPersonInfoViaTemplate(data.personList.items[0], host);
-          //this.renderPersonInfoViaReplace(data.personList.items[0], host);
-          //this.renderPersonInfoViaDocumentAPIs(data.personList.items[0], host);
-        } else {
-          console.log(`Cannot find person with name: ${queryParamValue}`);
+    this.fetchPersonByNamePersistedQuery(headlessAPIURL, queryParamValue)
+      .then(
+        ({
+          data,
+          err
+        }) => {
+          if (err) {
+            console.log('Error while fetching data');
+          } else if (data?.personList?.items.length === 1) {
+            this.renderPersonInfoViaTemplate(data.personList.items[0], host);
+            //this.renderPersonInfoViaReplace(data.personList.items[0], host);
+            //this.renderPersonInfoViaDocumentAPIs(data.personList.items[0], host);
+          } else {
+            console.log(`Cannot find person with name: ${queryParamValue}`);
+          }
         }
-      }
-    );
+      );
   }
 
   async fetchPersonByNamePersistedQuery(headlessAPIURL, queryParamValue) {
@@ -84,13 +82,10 @@ class PersonInfo extends HTMLElement {
       `;${aemHeadlessService.queryParamName}=${queryParamValue}`
     );
 
-    const fetchOptions = this.buildFetchOptions();
-
     try {
       // Make XHR call to AEM
       const response = await fetch(
-        `${headlessAPIURL}/${aemHeadlessService.persistedQueryName}${encodedParam}`,
-        fetchOptions
+        `${headlessAPIURL}/${aemHeadlessService.persistedQueryName}${encodedParam}`
       );
 
       if (!response.ok) {
@@ -108,15 +103,18 @@ class PersonInfo extends HTMLElement {
       error = e
         .toJSON()
         ?.map((error) => error.message)
-        ?.join(", ");
+        ?.join(', ');
       console.error(e.toJSON());
     }
 
-    return { data, err };
+    return {
+      data,
+      err
+    };
   }
 
   buildHeadlessAPIURL(host) {
-    let headlessAPIURL = "";
+    let headlessAPIURL = '';
 
     // If host is passed via Custom Element attribute, else use default value from 'aemHeadlessService.aemHost'
     if (host) {
@@ -124,37 +122,19 @@ class PersonInfo extends HTMLElement {
         host,
         aemHeadlessService.graphqlAPIEndpoint,
         aemHeadlessService.projectName,
-      ].join("/");
+      ].join('/');
     } else {
       headlessAPIURL = [
         aemHeadlessService.aemHost,
         aemHeadlessService.graphqlAPIEndpoint,
         aemHeadlessService.projectName,
-      ].join("/");
+      ].join('/');
     }
 
     return headlessAPIURL;
   }
 
-  buildFetchOptions() {
-    let fetchOptions;
-
-    if (aemCredentials.username && aemCredentials.password) {
-      const credentials = btoa(
-        `${aemCredentials.username}:${aemCredentials.password}`
-      );
-
-      fetchOptions = {
-        headers: {
-          Authorization: `Basic ${credentials}`,
-        },
-      };
-    }
-
-    return null;
-  }
-
-  renderPersonInfoViaTemplate(person, host){
+  renderPersonInfoViaTemplate(person, host) {
 
     const personTemplateElement = document.getElementById('person-template');
 
@@ -174,7 +154,7 @@ class PersonInfo extends HTMLElement {
     personOccupationsElement.innerHTML = '';
 
     person.occupation.map((occupationItem, index) => {
-      personOccupationsElement.innerHTML =  `${personOccupationsElement.innerHTML}<span class="person_occupation">${occupationItem}</span>`;
+      personOccupationsElement.innerHTML = `${personOccupationsElement.innerHTML}<span class="person_occupation">${occupationItem}</span>`;
     });
 
     this.shadowRoot.appendChild(templateContent.cloneNode(true));
@@ -182,7 +162,7 @@ class PersonInfo extends HTMLElement {
 
   // Define and apply this Person Info Specific Styles
   initStyles() {
-    const styleElement = document.createElement("style");
+    const styleElement = document.createElement('style');
     styleElement.textContent = `
         .person {
             position: relative;
@@ -228,13 +208,12 @@ class PersonInfo extends HTMLElement {
   }
 }
 
-
 // Create and add 'person-template' to the document as IIFE
 (() => {
 
   let personTemplateElement = document.getElementById('person-template');
 
-  if(!personTemplateElement){
+  if (!personTemplateElement) {
 
     personTemplateElement = document.createElement('template');
     personTemplateElement.setAttribute('id', 'person-template');
@@ -242,10 +221,10 @@ class PersonInfo extends HTMLElement {
 
     document.body.append(personTemplateElement);
 
-  }else{
+  } else {
     console.log('Template is present, no need to add again');
   }
 })();
 
 // Define the person-info element
-customElements.define("person-info", PersonInfo);
+customElements.define('person-info', PersonInfo);
