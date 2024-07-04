@@ -90,7 +90,6 @@ class PersonInfo extends HTMLElement {
 
       // The GraphQL data is stored on the response's data field
       data = responseData?.data;
-
     } catch (e) {
       // An error occurred, return the error messages
       this.error = e
