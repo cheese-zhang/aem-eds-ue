@@ -161,6 +161,18 @@
     ]
   },
   {
+    "id": "person",
+    "fields": [
+      {
+        "component": "text",
+        "name": "style",
+        "value": "",
+        "label": "Style",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "hero",
     "fields": [
       {

@@ -434,6 +434,21 @@
           }
         },
         {
+          "title": "Person",
+          "id": "person",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Person",
+                  "model": "person"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Adaptive Form",
           "id": "form",
           "plugins": {
