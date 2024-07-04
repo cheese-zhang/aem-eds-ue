@@ -86,7 +86,6 @@ class PersonInfo extends HTMLElement {
       // Make XHR call to AEM
       const response = await fetch(`${headlessAPIURL}/${aemHeadlessService.persistedQueryName}${encodedParam}`, {
         mode: 'no-cors',
-        credentials: 'include',
       });
       console.log(response);
       if (!response.ok) {
@@ -98,7 +97,6 @@ class PersonInfo extends HTMLElement {
 
       // The GraphQL data is stored on the response's data field
       data = responseData?.data;
-
     } catch (e) {
       // An error occurred, return the error messages
       error = e
