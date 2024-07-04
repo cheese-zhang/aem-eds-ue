@@ -84,13 +84,11 @@ class PersonInfo extends HTMLElement {
 
     try {
       // Make XHR call to AEM
-      const response = await fetch(
-        `${headlessAPIURL}/${aemHeadlessService.persistedQueryName}${encodedParam}`,{
-          mode: 'no-cors',
-          credentials: 'include'
-        }
-      );
-
+      const response = await fetch(`${headlessAPIURL}/${aemHeadlessService.persistedQueryName}${encodedParam}`, {
+        mode: 'no-cors',
+        credentials: 'include',
+      });
+      console.log(response);
       if (!response.ok) {
         console.log('ERROR:Could not load data from AEM');
       }
