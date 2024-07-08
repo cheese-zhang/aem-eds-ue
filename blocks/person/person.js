@@ -1,11 +1,25 @@
 export default function decorate(block) {
   const [personWrapper] = block.children;
-
+  const section = document.createElement('section');
+  section.classList.add('rail');
+  // person
   const personinfo = document.createElement('person-info');
   personinfo.setAttribute('host', 'https://publish-p110498-e1334763.adobeaemcloud.com');
   personinfo.setAttribute('query-param-value', 'John Doe');
-  personWrapper.replaceChildren(personinfo);
+  // tip
+  const tips = document.createElement('h2');
+  tips.textContent = '↓ The web component ↓';
+  // description
+  const description = document.createElement('p');
+  description.textContent = 'The above "person" is displayed using a web component that sources it\'s content from AEM\n' +
+    '      Headless GraphQL APIs.';
+  section.appendChild(tips);
+  section.appendChild(personinfo);
+  section.appendChild(description);
+
+  personWrapper.replaceChildren(section);
 }
+
 // Defines the Headless Service object w/ properties
 const aemHeadlessService = {
   aemHost: 'https://publish-p110498-e1334763.adobeaemcloud.com',
@@ -76,12 +90,10 @@ class PersonInfo extends HTMLElement {
   async fetchPersonByNamePersistedQuery(headlessAPIURL, queryParamValue) {
     let data;
     let err;
-
     //encode URI params
     const encodedParam = encodeURIComponent(
-      `;${aemHeadlessService.queryParamName}=${queryParamValue}`,null
+      `;${aemHeadlessService.queryParamName}=${queryParamValue}`,
     );
-
     try {
       // Make XHR call to AEM
       const response = await fetch(`${headlessAPIURL}/${aemHeadlessService.persistedQueryName}${encodedParam}`);
