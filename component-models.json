@@ -168,14 +168,14 @@
         "valueType": "string",
         "name": "personName",
         "label": "Name",
-        "value": "John Doe"
+        "value": ""
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "host",
         "label": "Publish Host",
-        "value": "https://publish-p110498-e1334763.adobeaemcloud.com"
+        "value": ""
       }
     ]
   },

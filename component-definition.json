@@ -442,7 +442,9 @@
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
                   "name": "Person",
-                  "model": "person"
+                  "model": "person",
+                  "host": "https://publish-p110498-e1334763.adobeaemcloud.com",
+                  "personName": "John Doe"
                 }
               }
             }
