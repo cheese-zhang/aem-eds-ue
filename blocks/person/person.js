@@ -157,7 +157,7 @@ class PersonInfo extends HTMLElement {
     personFullNameElement.textContent = person.fullName;
 
     const personBioElement = templateContent.querySelector('.person_biography');
-    personBioElement.textContent = person.biographyText.json[0].content[0].value;
+    personBioElement.textContent = person.biography.json[0].content[0].value;
 
     const personOccupationsElement = templateContent.querySelector('.person_occupations');
     personOccupationsElement.innerHTML = '';
@@ -212,7 +212,7 @@ class PersonInfo extends HTMLElement {
         }
         `;
 
-    console.log(`Added Styles`);
+    console.log('Added Styles');
     this.shadowRoot.appendChild(styleElement);
   }
 }
@@ -223,13 +223,11 @@ class PersonInfo extends HTMLElement {
   let personTemplateElement = document.getElementById('person-template');
 
   if (!personTemplateElement) {
-
     personTemplateElement = document.createElement('template');
     personTemplateElement.setAttribute('id', 'person-template');
     personTemplateElement.innerHTML = personInfoHTML;
 
     document.body.append(personTemplateElement);
-
   } else {
     console.log('Template is present, no need to add again');
   }
