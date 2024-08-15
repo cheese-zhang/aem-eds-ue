@@ -4,7 +4,7 @@ export default function decorate(block) {
   section.classList.add('rail');
   // person
   const personinfo = document.createElement('person-info');
-  personinfo.setAttribute('host', 'https://publish-p110498-e1334763.adobeaemcloud.com');
+  personinfo.setAttribute('host', 'https://author-p110498-e1334763.adobeaemcloud.com');
   personinfo.setAttribute('query-param-value', 'John Doe');
   // tip
   const tips = document.createElement('h2');

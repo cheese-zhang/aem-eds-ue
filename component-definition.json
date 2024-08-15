@@ -443,7 +443,7 @@
                 "template": {
                   "name": "Person",
                   "model": "person",
-                  "host": "https://publish-p110498-e1334763.adobeaemcloud.com",
+                  "host": "https://author-p110498-e1334763.adobeaemcloud.com",
                   "personName": "John Doe"
                 }
               }
