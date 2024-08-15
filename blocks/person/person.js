@@ -22,15 +22,16 @@ export default function decorate(block) {
 
 // Defines the Headless Service object w/ properties
 const aemHeadlessService = {
-  aemHost: 'https://publish-p110498-e1334763.adobeaemcloud.com',
+  aemHost: 'https://author-p110498-e1334763.adobeaemcloud.com',
   graphqlAPIEndpoint: 'graphql/execute.json',
   projectName: 'my-project',
   persistedQueryName: 'person-by-name',
   queryParamName: 'name',
 };
 
-//Person Info HTML block which will be added as HTML Template and appended to shadow DOM upon JSON Value replacements
-let personInfoHTML = `
+// eslint-disable-next-line max-len
+// Person Info HTML block which will be added as HTML Template and appended to shadow DOM upon JSON Value replacements
+const personInfoHTML = `
   <div class="person">
     <img
       class="person_image"
@@ -72,7 +73,7 @@ class PersonInfo extends HTMLElement {
       .then(
         ({
           data,
-          err
+          err,
         }) => {
           if (err) {
             console.log('Error while fetching data');
@@ -83,21 +84,21 @@ class PersonInfo extends HTMLElement {
           } else {
             console.log(`Cannot find person with name: ${queryParamValue}`);
           }
-        }
+        },
       );
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async fetchPersonByNamePersistedQuery(headlessAPIURL, queryParamValue) {
     let data;
     let err;
-    //encode URI params
+    // encode URI params
     const encodedParam = encodeURIComponent(
       `;${aemHeadlessService.queryParamName}=${queryParamValue}`,
     );
     try {
       // Make XHR call to AEM
       const response = await fetch(`${headlessAPIURL}/${aemHeadlessService.persistedQueryName}${encodedParam}`);
-      console.log(response);
       if (!response.ok) {
         console.log('ERROR:Could not load data from AEM');
       }
@@ -109,22 +110,22 @@ class PersonInfo extends HTMLElement {
       data = responseData?.data;
     } catch (e) {
       // An error occurred, return the error messages
-      error = e
-        .toJSON()
-        ?.map((error) => error.message)
-        ?.join(', ');
-      console.error(e.toJSON());
+      // eslint-disable-next-line no-shadow
+      const error = e.toJSON()?.map((error) => error.message)?.join(', ');
+      console.error(error);
     }
 
     return {
       data,
-      err
+      err,
     };
   }
 
+  // eslint-disable-next-line class-methods-use-this
   buildHeadlessAPIURL(host) {
     let headlessAPIURL = '';
 
+    // eslint-disable-next-line max-len
     // If host is passed via Custom Element attribute, else use default value from 'aemHeadlessService.aemHost'
     if (host) {
       headlessAPIURL = [
@@ -144,7 +145,6 @@ class PersonInfo extends HTMLElement {
   }
 
   renderPersonInfoViaTemplate(person, host) {
-
     const personTemplateElement = document.getElementById('person-template');
 
     const templateContent = personTemplateElement.content;
@@ -162,7 +162,8 @@ class PersonInfo extends HTMLElement {
     const personOccupationsElement = templateContent.querySelector('.person_occupations');
     personOccupationsElement.innerHTML = '';
 
-    person.occupation.map((occupationItem, index) => {
+    // eslint-disable-next-line array-callback-return
+    person.occupation.map((occupationItem) => {
       personOccupationsElement.innerHTML = `${personOccupationsElement.innerHTML}<span class="person_occupation">${occupationItem}</span>`;
     });
 
@@ -219,7 +220,6 @@ class PersonInfo extends HTMLElement {
 
 // Create and add 'person-template' to the document as IIFE
 (() => {
-
   let personTemplateElement = document.getElementById('person-template');
 
   if (!personTemplateElement) {
